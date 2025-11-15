@@ -25,15 +25,15 @@ https://github.com/hendrycks/apps
  provides the full dataset (~1.3 GB). 
 
 Also available via Hugging Face:
-
+```
 from datasets import load_dataset
 ds = load_dataset("codeparrot/apps")
-``` :contentReference[oaicite:3]{index=3}  
+```
 We use the *train* split as the training set, and the *test* split as the evaluation set.
 
 LeetCode Dataset
 The curated version “LeetCodeDataset” released recently supports robust evaluation and fine-tuning of code models. 
-Download via → [data](data/LeetCode) folder..
+Download via → [data](data/LeetCode) folder.
 We similarly use its training portion for fine-tuning, and its test portion for evaluation.
 
 
@@ -50,42 +50,48 @@ We fine-tune on four models:
 ## 🧲 Extracting
 Two skeletons can be extracted by the following code:
 <pre>
-python SMS.py
-python SSS.py
-python TAS.py
+python generate_CTS.py
+python generate_SAS.py
 </pre>
 
 
 ## 🏋️ Finetuning
+## 1. Base Model Finetuning
+First, We finetune the code generation model on the training splits of APPS and LeetCode to improve its understanding and generation ability for programming tasks:
+```
+python train_gen_model.py
+```
+## 2. Retrieval Trigger Training
+Second, Using the difference in test-case pass rates between the baseline and RAG outputs, we automatically construct labels to train a trigger that decides when external retrieval is needed:
+```
+python train_class_model.py  --mode train
+```
+## 3. Retrieval Ranker Training
+Third, When retrieval is triggered, a ranker selects the most useful snippet from multiple candidates to ensure higher-quality retrieval:
+```
+python train_rank_model.py
+```
 
-First, fine-tune the base model on the code of the APPS+EFFI dataset and the corresponding natural language description of the APPS dataset by running the following code:
+## 🔍 Retrieval
+The retrieval module in GateRank is responsible for extracting external code knowledge candidates used to augment the generation process:
 <pre>
-python train_base_model.py
-</pre>
-Then, fine-tune the base model in a multi-task framework :
-<pre>
-python train_mask_model.py
-python train_skeleton_model.py
-python train_total_model.py
-</pre>
+python retrieve.py
+<\pre>
 
 
 ## ✨ Generating
 
-Generate candidate codes for different fine-tuning methods:
+Generate results for different fine-tuning model:
 <pre>
-python generate_base.py
-python generate_mask.py
+python train_class_model.py --mode infer
+python rank_run.py
 python generate_skeleton.py
-python generate_total.py
 </pre>
 
 ## 📊 Evaluate
 
-You can run "test_one_solution.sh" to evaluate the functional correctness and efficiency of the generated code:
+You can run "test_one_solution.sh" to evaluate the functional correctness and pass count of the generated code:
 <pre>
 cd evaluate/metric
-bash test_one_solution.sh
-cd evaluate/metric_time
 bash test_one_solution.sh
 </pre>
