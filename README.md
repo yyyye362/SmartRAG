@@ -3,7 +3,7 @@
 
 ## ✨ Introduction
 
-SmartRAG is an adaptive RAG framework that decides when to retrieve and what to retrieve for code generation. By combining a lightweight retrieval trigger with an execution-guided knowledge selector, it avoids unnecessary retrieval and injects only useful code skeletons—significantly improving executability with lower inference cost.
+SmartRAG is an adaptive RAG framework that decides when to retrieve and what to retrieve for code generation. By combining a lightweight retrieval trigger with an execution-guided knowledge selector, it avoids unnecessary retrieval and injects only useful Knowledge—significantly improving executability with lower inference cost.
 
 ![./assets/images/ac_overview.png](./assets/images/SmartRAG.jpg)
 
@@ -13,7 +13,7 @@ SmartRAG is an adaptive RAG framework that decides when to retrieve and what to 
 The code requires some dependencies as specified in requirements.txt. Please follow the relevant libraries to install or run:
 ```bash
 pip install -r requirements.txt
-
+```
 
 ## 📚 Datasets
 
@@ -31,12 +31,11 @@ ds = load_dataset("codeparrot/apps")
 ``` :contentReference[oaicite:3]{index=3}  
 We use the *train* split as the training set, and the *test* split as the evaluation set.
 
-
-
 LeetCode Dataset
 The curated version “LeetCodeDataset” released recently supports robust evaluation and fine-tuning of code models. 
 Download via → [data](data/LeetCode) folder..
 We similarly use its training portion for fine-tuning, and its test portion for evaluation.
+
 
 
 ## 🤗 Model
