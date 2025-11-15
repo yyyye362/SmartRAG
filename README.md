@@ -1,9 +1,9 @@
-# SmartRAG: Learning When and What to Retrieve for Function-Level Code Generation
+# GateRank: Learning When and What to Retrieve for Function-Level Code Generation
 
 
 ## ✨ Introduction
 
-SmartRAG is an adaptive RAG framework that decides when to retrieve and what to retrieve for code generation. By combining a lightweight retrieval trigger with an execution-guided knowledge selector, it avoids unnecessary retrieval and injects only useful Knowledge—significantly improving executability with lower inference cost.
+GateRank is an adaptive RAG framework that decides when to retrieve and what to retrieve for code generation. By combining a lightweight retrieval trigger with an execution-guided knowledge selector, it avoids unnecessary retrieval and injects only useful Knowledge—significantly improving executability with lower inference cost.
 
 ![./assets/images/ac_overview.png](./assets/images/SmartRAG.jpg)
 
